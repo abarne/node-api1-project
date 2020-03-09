@@ -32,10 +32,10 @@ server.get('/api/users', (req, res) => {
 	res.status(200).json(users);
 });
 
-server.get('/api/users/:id', async (req, res) => {
+server.get('/api/users/:id', (req, res) => {
 	let _id = +req.params.id;
 
-	const user = await users.find(({ id }) => id === _id);
+	const user = users.find(({ id }) => id === _id);
 	if (user) {
 		res.status(200).json(user);
 	} else {
@@ -43,14 +43,14 @@ server.get('/api/users/:id', async (req, res) => {
 	}
 });
 
-server.delete('/api/users/:id', async (req, res) => {
+server.delete('/api/users/:id', (req, res) => {
 	let _id = +req.params.id;
-	const user = await users.find(({ id }) => id === _id);
+	const user = users.find(({ id }) => id === _id);
 	if (!user) {
 		res.status(400).json({ message: 'User not found.' });
 	} else {
 		users = users.filter((item) => item.id !== _id);
-		res.status(200).json(users);
+		res.status(200).json({ message: 'Successfully deleted user', user: user });
 	}
 });
 
