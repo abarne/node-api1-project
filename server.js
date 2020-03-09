@@ -39,7 +39,7 @@ server.get('/api/users/:id', (req, res) => {
 	if (user) {
 		res.status(200).json(user);
 	} else {
-		res.status(400).json({ message: 'User not found' });
+		res.status(404).json({ message: 'User not found' });
 	}
 });
 
@@ -47,7 +47,7 @@ server.delete('/api/users/:id', (req, res) => {
 	let _id = +req.params.id;
 	const user = users.find(({ id }) => id === _id);
 	if (!user) {
-		res.status(400).json({ message: 'User not found.' });
+		res.status(404).json({ message: 'User not found.' });
 	} else {
 		users = users.filter((item) => item.id !== _id);
 		res.status(200).json({ message: 'Successfully deleted user', user: user });
@@ -70,7 +70,7 @@ server.patch('/api/users/:id', (req, res) => {
 			users[indexOfUser] = newUser;
 			res.status(200).json(newUser);
 		} else {
-			res.status(400).json({ message: 'User not found.' });
+			res.status(404).json({ message: 'User not found.' });
 		}
 	}
 });
